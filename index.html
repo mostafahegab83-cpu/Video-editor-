@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Video Editor — Trim, Merge, Text & Export</title>
+<meta name="description" content="Browser-based video editor: upload, trim, merge clips, add text overlays, and export — all in MP4." />
+<link rel="icon" href="logo.png" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <img src="logo.png" alt="Video Editor logo" class="logo" />
+    <h1>Video Editor</h1>
+  </header>
+
+  <main class="card">
+    <div class="grid">
+      <!-- Upload / Preview -->
+      <div id="dropZone" class="drop">
+        <div id="placeholder" class="placeholder">
+          <div class="arrow">⬆</div>
+          <p class="big">Upload Video</p>
+          <p class="hint">Drag &amp; drop or click below</p>
+        </div>
+        <video id="video" class="video hidden" playsinline></video>
+
+        <label class="file-btn">
+          <input id="fileInput" type="file" accept="video/*" multiple hidden />
+          <span>Choose video</span>
+        </label>
+
+        <div id="clipsBox" class="clips hidden">
+          <div class="clips-title">Clips (<span id="clipCount">0</span>)</div>
+          <ul id="clipList"></ul>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="actions">
+        <!-- Trim -->
+        <div class="action">
+          <button id="btnTrim" class="primary" disabled>Trim</button>
+          <label>From (sec)</label>
+          <input id="trimFrom" type="number" min="0" step="0.1" value="0" />
+          <label>To (sec)</label>
+          <input id="trimTo" type="number" min="0" step="0.1" value="0" />
+        </div>
+
+        <!-- Merge -->
+        <div class="action">
+          <button id="btnMerge" class="primary" disabled>Merge</button>
+          <p class="muted">Combine all uploaded clips in order. Upload 2+ videos to enable.</p>
+        </div>
+
+        <!-- Text -->
+        <div class="action">
+          <button id="btnText" class="primary" disabled>Text</button>
+          <input id="textValue" type="text" placeholder="Overlay text" />
+          <label>From (sec)</label>
+          <input id="textFrom" type="number" min="0" step="0.1" value="0" />
+          <label>To (sec)</label>
+          <input id="textTo" type="number" min="0" step="0.1" value="0" />
+        </div>
+
+        <!-- Export -->
+        <div class="action">
+          <button id="btnExport" class="primary" disabled>Export</button>
+          <p class="muted">Exports the active clip as <strong>MP4</strong> (H.264 + AAC) — the most widely supported format.</p>
+          <a id="downloadLink" class="download hidden" download>Download</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Player bar -->
+    <div class="player">
+      <button id="playBtn" class="play" disabled>▶</button>
+      <input id="seek" type="range" min="0" max="0" step="0.01" value="0" disabled />
+      <span id="time" class="time">0:00 / 0:00</span>
+      <button id="muteBtn" class="mute" disabled>🔊</button>
+    </div>
+
+    <div id="status" class="status"></div>
+    <p class="footnote">All processing happens locally in your browser using FFmpeg WebAssembly. Nothing is uploaded.</p>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
